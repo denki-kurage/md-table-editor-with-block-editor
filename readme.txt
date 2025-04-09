@@ -6,7 +6,7 @@ Stable tag: 0.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 6.7.2
-Requires PHP: 8.0.30
+Requires PHP: 8.0.30-dev
 
 
 Markdown Table edit tool.

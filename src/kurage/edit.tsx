@@ -58,7 +58,7 @@ export default ({ attributes, setAttributes }) =>
 
 	return (
 		<div { ...useBlockProps() }>
-			<div>MdTableEditor with WordPress Block Editor</div>
+			<div>MdTableEditor with Block Editor</div>
 
 			<InspectorControls>
 				<PanelBody title="操作パネル">

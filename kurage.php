@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name:       Kurage
- * Description:       Example block scaffolded with Create Block tool.
+ * Plugin Name:       MdTableEditor with Block Editor
+ * Description:       This is an editor that allows you to edit tables in Markdown notation.
  * Version:           0.1.0
- * Requires at least: 6.7
- * Requires PHP:      7.4
- * Author:            The WordPress Contributors
+ * Requires at least: 6.7.2
+ * Requires PHP:      8.0.30
+ * Author:            denkikurage
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       kurage
+ * Text Domain:       md-table-editor
  *
  * @package CreateBlock
  */
