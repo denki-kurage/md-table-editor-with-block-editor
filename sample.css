@@ -2,21 +2,16 @@
   width: 100%;
 }
 .markdown-content-style TABLE, .markdown-content-style TH, .markdown-content-style TD {
-  border: 2px solid rgb(255, 221, 221);
+  border: 2px solid rgb(255, 117, 117);
   border-collapse: collapse;
   padding: 0.3em;
 }
 .markdown-content-style TH {
-  background-color: rgb(227, 227, 227);
+  background-color: rgb(255, 237, 237);
 }
 .markdown-content-style TH:not([align]) {
   text-align: left;
 }
 .markdown-content-style TD {
   background-color: rgb(246, 246, 246);
-}
-
-.big-font {
-  color: red;
-  font-size: 3em;
 }/*# sourceMappingURL=sample.css.map */
