@@ -1,0 +1,17 @@
+.markdown-content-style TABLE {
+  width: 100%;
+}
+.markdown-content-style TABLE, .markdown-content-style TH, .markdown-content-style TD {
+  border: 1px solid rgb(210, 210, 210);
+  border-collapse: collapse;
+  padding: 0.3em;
+}
+.markdown-content-style TH {
+  background-color: rgb(227, 227, 227);
+}
+.markdown-content-style TH:not([align]) {
+  text-align: left;
+}
+.markdown-content-style TD {
+  background-color: rgb(246, 246, 246);
+}/*# sourceMappingURL=markdown.css.map */

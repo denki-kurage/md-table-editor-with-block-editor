@@ -1,0 +1,45 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-create-block-kurage {
+  border: 1px dotted #f00;
+}
+
+.scroll-commands-panel {
+  padding: 0.5em;
+}
+.scroll-commands-panel .scroll-command-item {
+  width: 100%;
+  overflow: hidden;
+  margin: 0.2em;
+}
+
+.split-panel {
+  display: flex;
+  height: 500px;
+}
+
+.width-panel {
+  width: 100%;
+  height: 100%;
+}
+.width-panel > div {
+  height: 100%;
+}
+.width-panel section {
+  height: 100%;
+}
+
+.markdown-content table {
+  width: 100%;
+}
+
+.button-group {
+  width: 100%;
+  justify-items: stretch;
+}
+.button-group > button {
+  margin: 0.1rem;
+}/*# sourceMappingURL=editor.css.map */

@@ -1,0 +1,302 @@
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { __ } from '@wordpress/i18n';
+import {BlockControls, InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import './editor.scss';
+import { Button, Icon, Modal, PanelBody, Spinner, ToolbarButton, ToolbarGroup } from '@wordpress/components';
+
+import {  AppHelper, DefaultCommandItems, EventUpdateManager, IAppContext, MarkdownTableContent } from 'md-table-editor'
+import { BrowserAppMain } from './classes/BrowserAppMain';
+import { marked } from 'marked';
+import ImageUploadEditor from './components/image-upload-editor';
+import MonacoEditor from './components/monaco-editor';
+import { MonacoAppMain } from './classes/MonacoAppMain';
+import CommandsInspector from './components/commands-inspector';
+import EditToolbar from './components/edit-toolbar';
+import { AppMainHelper } from './classes/AppMainHelper';
+import { useSelect } from '@wordpress/data';
+import { store as editorStore } from '@wordpress/editor';
+
+const str = `
+| fruits | price | color  | pr |
+|--------|-------|--------|----|
+| apple  | 200   | red | 1  |
+ grape  | 1200  | purple | 22 |
+| banana | 160   | yellow | 3  |ff
+| melon  | 2000  | green  | 51 |
+`;
+
+type EditMode = "code"|"view"|"both";
+export default ({ attributes, setAttributes }) =>
+{
+	const { markdown, viewMode, splitSize, editHeight } = attributes;
+	const [isOpen, setIsOpen] = useState(false);
+
+	const [app, setApp] = useState<MonacoAppMain>();
+	const [tables, setTables] = useState<MarkdownTableContent[]>([]);
+	const [currentTable, setCurrentTable] = useState<MarkdownTableContent|undefined>();
+
+	const helper = useMemo(() => app ? new AppMainHelper(app) : undefined, [app]);
+	const enabledCommandNames = helper?.enabledCommandNames ?? [];
+	
+	const onPanelChange = (viewMode: EditMode) =>
+	{
+		setAttributes({viewMode});
+	}
+
+	const onCodeChanged = (markdown: string) =>
+	{
+		setAttributes({ markdown })
+	}
+
+	const isBoth = viewMode === 'both';
+	const both = { width: "50%" };
+	const full = { width: "100%" };
+	const none = { display: "none" };
+	const styles = isBoth ? [both, both] : (viewMode === 'code' ? [full, none] : [none, full]);
+	
+
+
+	return (
+		<div { ...useBlockProps() }>
+			<div>MdTableEditor with WordPress Block Editor</div>
+
+			<InspectorControls>
+				<PanelBody title="操作パネル">
+					<div className="button-group" >
+						<Button variant="primary" disabled={viewMode === "code"} onClick={() => onPanelChange("code")}>{ __('Code', 'md-table-editor') }</Button>
+						<Button variant="primary" disabled={viewMode === "view"} onClick={() => onPanelChange("view")}>{ __('View', 'md-table-editor') }</Button>
+						<Button variant="primary" disabled={viewMode === "both"} onClick={() => onPanelChange("both")}>{ __('Both', 'md-table-editor') }</Button>
+					</div>
+				</PanelBody>
+			</InspectorControls>
+
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarButton icon="media-default" label={ __('Add Image', 'md-table-editor')} onClick={() => setIsOpen(true)} />
+				</ToolbarGroup>
+			</BlockControls>
+                    
+
+			<SplitPanel height={editHeight}>
+				<Panel style={styles[0]}>
+					<MonacoEditor
+						value={markdown}
+						onValueChanged={onCodeChanged}
+						onAppChanged={setApp}
+						onCurrentTableChanged={setCurrentTable}
+						onTablesChanged={setTables}
+						 />
+				</Panel>
+				<Panel style={styles[1]}><MarkdownViewer value={markdown} /></Panel>
+			</SplitPanel>
+
+			{ (helper && currentTable) && 
+				<EditToolbar
+					map={DefaultCommandItems}
+					commandMap={helper.commands}
+					isEnable={c => enabledCommandNames.includes(c)}
+					/>
+			}
+
+			{ helper &&
+				<CommandsInspector
+					map={DefaultCommandItems}
+					commandMap={helper.commands}
+					isEnable={c => enabledCommandNames.includes(c)}
+					tables={tables}
+					current={currentTable}
+					editHeight={editHeight}
+					onEditHeightChanged={editHeight => setAttributes({editHeight: editHeight || null})}
+					/>
+			}
+			
+
+			{ isOpen && <Modal title={ __('Add Image', 'md-table-editor')} onRequestClose={() => setIsOpen(false)}>
+				<ImageUploadEditor helper={helper} onExecuted={() => setIsOpen(false)} />
+			</Modal> }
+
+		</div>
+
+	)
+}
+
+
+const TableEditor = ({ onValueChanged }) =>
+{
+	const inputRef = useRef(null) as any;
+	const [app, setApp] = useState<BrowserAppMain>();
+	const [enabledCommands, setEnabledCommands] = useState<string[]>([]);
+	const [tables, setTables] = useState<MarkdownTableContent[]>([]);
+
+
+	useEffect(() => {
+		if(inputRef.current)
+		{
+			const app = new BrowserAppMain(inputRef.current);
+			app.tableUpdated.push((tables) => {
+				setEnabledCommands(app.getEnabledCommandNames());
+				setTables(tables);
+				onValueChanged(app.getText());
+			});
+			setApp(app)
+		}
+	}, [inputRef.current]);
+
+
+
+	const map = app?.getCommandNames();
+	const commands = app?.getCommands();
+
+	const isEnableCommand = useMemo(() => (name: string) => enabledCommands.includes(name), [enabledCommands]);
+
+
+	return (
+		<>
+			<textarea
+				ref={inputRef}
+				rows={10}
+				cols={50}
+				onSelect={e => {
+					if(app) app.createTransmitterWrapper().select()
+				}}
+				onChange={e => {
+					if(app) app.createTransmitterWrapper().replace();
+				}}
+				/>
+			
+			{ (app && map && commands) && <EditToolbar map={map} commandMap={commands} isEnable={isEnableCommand} /> }
+			{ (app && map && commands) && <CommandsInspector map={map} commandMap={commands} tables={tables} isEnable={isEnableCommand}  /> }
+
+
+		</>
+	)
+
+	/*
+	
+	return (
+		<>
+			<TextArea
+				ref={inputRef}
+				value={text}
+				cols={50}
+				rows={10}
+				onSelect={e => console.log(e)}
+				onChange={e => {
+					setText(e.target.value);
+					const ce = AppInitializeConfig.createRecieverEvent(e.target.value, e.target.selectionStart);
+					appConfig.updateText(e.target.value, e.target.selectionStart);
+					reciever?.textChanged(ce)
+				}} />
+			
+			<EditToolbar map={map} commandMap={commands} />
+		</>
+	)
+		*/
+}
+
+
+
+
+
+const MarkdownViewer = ({value}) =>
+{
+	const frameRef = useRef(null);
+	const valueRef = useRef(value);
+
+	const [isLoading, setIsLoading] = useState(false);
+	const [updateManager, setUpdateManager] = useState<EventUpdateManager|undefined>(undefined);
+
+	useEffect(() => {
+		valueRef.current = value;
+		updateManager?.lazyUpdate();
+		setIsLoading(true);
+	}, [value]);
+
+	useEffect(() => {
+		const updater = new EventUpdateManager(800);
+		updater.updated.push(() =>
+		{
+			const value = valueRef.current;
+			const parsedCode = marked.parse(value, { breaks: true });
+			const css = '<style>table{ width: 100%; }</style>';
+			const markdownContent = `<div class="markdown-content-style">${parsedCode}</div>`;
+			const html = `${css} ${markdownContent}`;
+
+			const iframe = frameRef.current;
+
+			// @ts-ignore
+			const doc = (iframe?.contentDocument ?? iframe?.contentWindow.document);
+			if(doc)
+			{
+				doc.body.innerHTML = html;
+				const fragment = doc.createDocumentFragment();
+				const styles = [...window.document.querySelectorAll('[is-markdown-content-style="true"]')];
+				styles.map(s => fragment.appendChild(s.cloneNode(true)));
+				doc.head.appendChild(fragment);
+			}
+
+			setIsLoading(false);
+		});
+
+		updater.lazyUpdate();
+		setUpdateManager(updater);
+
+		return () => updater.dispose();
+	}, []);
+
+	return (
+		<div>
+			<iframe className='width-panel' ref={frameRef}></iframe>
+			<Loading isLoading={isLoading} />
+		</div>
+	)
+}
+
+const Loading = ({isLoading}) =>
+{
+	const style: any = {
+		position: 'absolute',
+		top: 0,
+		width: "100%",
+		height: "100%",
+	};
+
+	return (
+		<>
+			{ isLoading &&
+				<>
+				<div style={{...style, opacity: 0.5, backgroundColor: "white"}}></div>
+				<div style={{...style, alignContent: "center", textAlign: "center"}}>
+					<Spinner style={{width: 100, height: 100}} />
+				</div>
+				</>
+			}
+		</>
+	)
+}
+
+
+const SplitPanel = ({children, height}) =>
+{
+    // @ts-ignore
+    const post: any = useSelect(select => select(editorStore).getCurrentPost(), []);
+
+	const style = { height: height ?? post?.md_table_editor_height ?? undefined };
+
+	return (
+		<div className="md-table-editor split-panel" style={style}>
+			{children}
+		</div>
+	)
+}
+
+const Panel = ({children, style}) =>
+{
+
+
+	return (
+		<div className="width-panel" style={style}>
+			{children}
+		</div>
+	)
+}

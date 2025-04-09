@@ -1,0 +1,23 @@
+{
+  "name": "md-table-editor",
+  "version": "0.0.0",
+  "description": "MdTableEditor",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": {
+    "name": "clover"
+  },
+  "scripts": {
+    "build": "npx tsc --out ./src/index.ts"
+  },
+  "dependencies": {
+    "md-table-editor": "file./venders/md-table-editor"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.2",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1"
+  }
+}

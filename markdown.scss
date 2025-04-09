@@ -1,0 +1,44 @@
+
+.markdown-content-style
+{
+
+    TABLE
+    {
+        width: 100%;
+    }
+
+    TABLE, TH, TD
+    {
+        border: 1px solid rgb(210, 210, 210);
+        border-collapse: collapse;
+        padding: .3em;
+    }
+
+    TH
+    {
+        background-color: rgb(227, 227, 227);
+
+        // THはデフォルトでCENTERに並ぶので、--- だと中央に位置してしまいます。
+        // それでは実態と異なるので ---指定の場合はCSSレベルで左寄せします。
+        // 
+        // ---  ->  <TH>
+        // :--  ->  <TH align="left">
+        &:not([align])
+        {
+            text-align: left;
+        }
+    }
+
+    TD
+    {
+        background-color: rgb(246, 246, 246);
+    }
+
+
+
+    
+}
+
+
+
+

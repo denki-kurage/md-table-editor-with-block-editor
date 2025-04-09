@@ -1,0 +1,47 @@
+.wp-kurage
+{
+	box-sizing: border-box;
+	border-width: 1px;
+	border-color: green;
+	background-color: rgba(128, 128, 128, 0.5);
+
+	&.row
+	{
+		border-style: solid none solid none;
+	}
+
+	&.column
+	{
+		border-style: none solid none solid;
+	}
+
+	&.left
+	{
+		// border-style: solid none solid solid;
+		border-style: solid none solid none;
+	}
+
+	&.right
+	{
+		// border-style: solid solid solid none;
+		border-style: solid none solid none;
+	}
+
+	&.top
+	{
+		border-style: solid solid none solid !important;
+	}
+
+	&.bottom
+	{
+		border-style: none solid solid solid !important;
+	}
+
+	&.center
+	{
+		border-style: solid;
+	}
+
+}
+
+

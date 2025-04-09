@@ -1,0 +1,46 @@
+=== MdTableEditor with Block Editor ===
+Contributors: denkikurage
+Tags: markdown table
+Tested up to: 6.7.2
+Stable tag: 0.1.0
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Requires at least: 6.7.2
+Requires PHP: 8.0.30
+
+
+Markdown Table edit tool.
+
+== Description ==
+
+A block editor that supports editing tables in Markdown notation.
+
+You can edit Markdown tables by adding, deleting, moving columns and rows, aligning text, and shaping.
+
+== Installation ==
+
+1. Go to the admin screen
+2. Open the "Plugins" item and click "Add New Plugin"
+3. Enter "MdTableEditor" in the search box.
+4. Find "MdTableEditor with WordPress Block Editor" and click "Install"
+
+== Frequently Asked Questions ==
+
+= A question that someone might have =
+
+= What about foo bar? =
+
+== Screenshots ==
+
+== Changelog ==
+
+= 0.1.0 =
+* Release
+
+== Arbitrary section ==
+
+
+
+
+
+
