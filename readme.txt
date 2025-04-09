@@ -16,6 +16,12 @@ Markdown Table edit tool.
 A block editor that supports editing tables in Markdown notation.
 
 You can edit Markdown tables by adding, deleting, moving columns and rows, aligning text, and shaping.
+Please see here for specific operations.
+
+https://github.com/denki-kurage/md-table-editor-with-block-editor/blob/main/src/kurage/document/readme.md
+
+
+
 
 == Installation ==
 
