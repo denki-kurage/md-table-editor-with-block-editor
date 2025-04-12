@@ -18,8 +18,16 @@ A block editor that supports editing tables in Markdown notation.
 You can edit Markdown tables by adding, deleting, moving columns and rows, aligning text, and shaping.
 Please see here for specific operations.
 
-https://github.com/denki-kurage/md-table-editor-with-block-editor/blob/main/src/kurage/document/readme.md
 
+This is a port of the VSCode extension "MdTableEditor" to the block editor.
+
+https://marketplace.visualstudio.com/items?itemName=clover.md-table-editor
+
+
+
+Please see here for specific operations.
+
+https://github.com/denki-kurage/md-table-editor-with-block-editor/blob/main/src/kurage/document/readme.md
 
 
 

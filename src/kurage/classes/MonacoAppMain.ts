@@ -3,6 +3,7 @@ import { editor, IRange, languages, Position } from 'monaco-editor';
 import { AppMain, IAppContext, ICommand, ITextEventReciever, ITextReplacer, MarkdownTableContent, TableCacheManager } from "md-table-editor";
 import { MonacoDecorator } from "./MonacoDecorator";
 import { AddImageCommand } from "../commands/AddImageCommand";
+import { AddBlogCardCommand } from "../commands/AddBlogCardCommand";
 
 interface MonacoInitParam
 {
@@ -94,6 +95,7 @@ export class MonacoAppMain extends AppMain<MonacoInitParam>
     {
         const commands = super.createCommands(appContext, cache);
         commands.set('markdown:add-image', new AddImageCommand(appContext));
+        commands.set('markdown:add-blog-card', new AddBlogCardCommand(appContext));
 
         return commands;
     }

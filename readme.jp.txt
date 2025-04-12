@@ -16,6 +16,12 @@ Markdown Table edit tool.
 マークダウン表記のテーブルを編集支援するブロックエディタです。
  列や行の追加、削除、移動、テキストの整列、成形などマークダウンテーブルの編集を一通りできます。
 
+
+VSCodeの拡張機能「MdTableEditor」をブロックエディタに移植したものです。
+
+https://marketplace.visualstudio.com/items?itemName=clover.md-table-editor
+
+
 具体的な操作はこちらをご覧ください。
 
 https://github.com/denki-kurage/md-table-editor-with-block-editor/blob/main/src/kurage/document/readme.jp.md

@@ -45,6 +45,23 @@ add_action('init', function(){
 	$adminCss = $adminCss ? $adminCss : $cssPath;
 	$frontCss = $frontCss ? $frontCss : $cssPath;
 
+	add_action('wp_head', function(){
+
+		
+		//echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />';
+		echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />';
+		echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>';
+		echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>';
+	});
+	add_action('admin_head', function(){
+
+		
+		//echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />';
+		echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />';
+		echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>';
+		echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>';
+	});
+
 
 	add_action('wp_head', fn() => printf('<link rel="stylesheet" href="%s" />', esc_attr($frontCss)));
 	add_action('admin_head', fn() => printf('<link rel="stylesheet" is-markdown-content-style="true" href="%s" />', esc_attr($adminCss)));

@@ -2,6 +2,11 @@
 .markdown-content-style
 {
 
+    > *
+    {
+        margin: .2em;
+    }
+
     TABLE
     {
         width: 100%;
@@ -11,7 +16,7 @@
     {
         border: 1px solid rgb(210, 210, 210);
         border-collapse: collapse;
-        padding: .3em;
+        padding: .3em .0em;
     }
 
     TH
@@ -35,9 +40,59 @@
     }
 
 
+    pre
+    {
+        max-height: 500px;
+        overflow: hidden;
+    }
 
-    
+    .blog-card
+    {
+        width: 100%;
+        border: 1px solid rgb(182, 182, 182);
+        border-radius: 1em;
+        overflow: hidden;
+
+        >a
+        {
+            text-decoration: none;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+
+            >div
+            {
+                padding: 1.2em;
+
+                >div
+                {
+                    font-size: 1.0em;
+                }
+
+                >span
+                {
+                    font-size: 0.7em;
+                }
+
+                >*
+                {
+                    color: #111;
+                    overflow: hidden;
+                }
+            }
+
+            >img
+            {
+                width: 160px;
+                height: 120px;
+                object-fit: cover;
+            }
+        }
+    }
 }
+
+
+
 
 
 

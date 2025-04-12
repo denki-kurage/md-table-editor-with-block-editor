@@ -1,10 +1,13 @@
+.markdown-content-style > * {
+  margin: 0.2em;
+}
 .markdown-content-style TABLE {
   width: 100%;
 }
 .markdown-content-style TABLE, .markdown-content-style TH, .markdown-content-style TD {
   border: 1px solid rgb(210, 210, 210);
   border-collapse: collapse;
-  padding: 0.3em;
+  padding: 0.3em 0em;
 }
 .markdown-content-style TH {
   background-color: rgb(227, 227, 227);
@@ -14,4 +17,39 @@
 }
 .markdown-content-style TD {
   background-color: rgb(246, 246, 246);
+}
+.markdown-content-style pre {
+  max-height: 500px;
+  overflow: hidden;
+}
+.markdown-content-style .blog-card {
+  width: 100%;
+  border: 1px solid rgb(182, 182, 182);
+  border-radius: 1em;
+  overflow: hidden;
+}
+.markdown-content-style .blog-card > a {
+  text-decoration: none;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.markdown-content-style .blog-card > a > div {
+  padding: 1.2em;
+}
+.markdown-content-style .blog-card > a > div > div {
+  font-size: 1em;
+}
+.markdown-content-style .blog-card > a > div > span {
+  font-size: 0.7em;
+}
+.markdown-content-style .blog-card > a > div > * {
+  color: #111;
+  overflow: hidden;
+}
+.markdown-content-style .blog-card > a > img {
+  width: 160px;
+  height: 120px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }/*# sourceMappingURL=markdown.css.map */

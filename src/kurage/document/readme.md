@@ -1,4 +1,4 @@
-# MdTableEditor with WordPress Block Editor
+# MdTableEditor with Block Editor
 
 You can edit tables written in Markdown with the block editor.
 
@@ -15,9 +15,9 @@ This block allows you to create and edit tables in Markdown format.
 
 It allows you to do all the editing of Markdown tables, such as adding, deleting, and moving columns and rows, and aligning and shaping text.
 
-You can also use Markdown notations other than tables, but at present this is not practical for things like adding links or highlighting source code.
 
-It is intended solely for editing tables.
+Currently, source code highlighting has not been implemented,
+and it will take some time. For now, it is only used for table editing.
 
 
 ## How to use
@@ -41,7 +41,7 @@ You can use the completion function by entering `4x` in the first column of a li
 ![](md-i-2.png)
 
 Executing `4x4` creates a table with four rows and four columns.
-If you want to display the view, press ``ctrl` + space`` during completion.
+If you want to display the view, press `ctrl` + `space` during completion.
 
 
 ![](md-sample.png)
@@ -92,12 +92,15 @@ You can set the default height of the editor and the style sheet of the HTML tha
 
 ## Specify the Markdown style.
 
-You can set the style from the global settings.
+You can set styles from global settings.
+
+By default, there is a file called "markdown.css" in the plugin directory, and that is used.
+
+* For some reason, WordPress Playgroynd cannot use the default CSS file.
 
 The Markdown DOM is placed under `div.markdown-content-style` on both the frontend and backend.
 
-Therefore, design it in SASS as follows.
-
+Therefore, you should design it in SASS as follows.
 
     markdown.scss
 
@@ -138,9 +141,91 @@ Therefore, design it in SASS as follows.
     }
 }
 ```
+* This SCSS may change in the future.
+The latest SCSS can be found on GitHub.
+
+https://github.com/denki-kurage/md-table-editor-with-block-editor/blob/main/markdown.scss
+
 
 This is the style used by default.
 After converting it to CSS and placing it on the web, you can change the Markdown style by specifying it in the global settings.
+
+
+
+
+### Example
+
+Here is an example.
+
+    sample.scss
+
+```scss
+.markdown-content-style
+{
+    TABLE
+    {
+        width: 100%;
+    }
+
+    TABLE, TH, TD
+    {
+        border: 2px solid rgb(255, 117, 117);
+        border-collapse: collapse;
+        padding: .3em;
+    }
+
+    TH
+    {
+        background-color: rgb(255, 237, 237);
+
+        &:not([align])
+        {
+            text-align: left;
+        }
+    }
+
+    TD
+    {
+        background-color: rgb(246, 246, 246);
+    }
+    
+}
+```
+
+
+
+After converting to CSS, upload it to a suitable location.
+
+https://denki-kurage.github.io/md-table-editor-with-block-editor/sample.css
+
+![](md-css-set.png)
+
+ADMIN CSS is the style applied to the confirmation screen of the block editor,
+
+FRONT CSS is the style applied to the public page.
+
+![](md-css.png)
+
+Refresh your browser to see that the style has been applied.
+
+
+
+
+## I want to add a blog card
+
+![](md-blog-card.png)
+
+You can add a blog card from the toolbar.
+However, the site must support OGP (Open Graph Protocol).
+Currently, if the site does not support it, it will not be treated well.
+
+![](md-blog-card-2.png)
+
+The blog card tag will be added.
+
+
+
+
 
 ## Requests, etc.
 

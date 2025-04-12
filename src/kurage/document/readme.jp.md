@@ -1,4 +1,4 @@
-# MdTableEditor with WordPress Block Editor
+# MdTableEditor with Block Editor
 
 ブロックエディタでマークダウン表記のテーブルを編集できます。
 元々はVSCodeの拡張機能として作っていたMdTableEditorをWordPressに移植したものです。
@@ -13,8 +13,10 @@ https://marketplace.visualstudio.com/items?itemName=clover.md-table-editor
 このブロックを使用すると、マークダウン形式のテーブルで表を作成、編集できます。
 列や行の追加、削除、移動、テキストの整列、成形などマークダウンテーブルの編集を一通りできます。
 
-テーブル以外のマークダウン表記も使えますが、リンク追加やソースコードのハイライトなど現状は実用的ではありません。
-あくまでテーブル編集専用として使います。
+現在のところソースコードのハイライトが実装出来ておらず、
+もうしばらく時間がかかります。今はあくまでテーブル編集専用として使います。
+
+
 
 
 ## 使い方
@@ -104,6 +106,10 @@ https://marketplace.visualstudio.com/items?itemName=clover.md-table-editor
 
 グローバル設定からスタイルを設定可能です。
 
+デフォルトではプラグインディレクトリに「markdown.css」というファイルがあり、それが使用されています。
+
+* 何故か WordPress Playgroynd ではデフォルトのCSSファイルが使用できません。
+
 マークダウンのDOMはフロントエンド、バックエンド共に`div.markdown-content-style`以下に配置されます。
 よってSASSでは以下のようにデザインします。
 
@@ -148,8 +154,83 @@ https://marketplace.visualstudio.com/items?itemName=clover.md-table-editor
 }
 ```
 
-これがデフォルトで使用されているスタイルです。
+*このSCSSは今後変更される可能性があります。
+最新のSCSSはGitHubにあります。
+
+https://github.com/denki-kurage/md-table-editor-with-block-editor/blob/main/markdown.scss
+
+
+
 CSSに変換しウェブ上に配置した後、グローバル設定で指定することでマークダウンのスタイルを変更できます。
+
+
+### 実例
+
+実例をあげます。
+
+    sample.scss
+
+```scss
+.markdown-content-style
+{
+    TABLE
+    {
+        width: 100%;
+    }
+
+    TABLE, TH, TD
+    {
+        border: 2px solid rgb(255, 117, 117);
+        border-collapse: collapse;
+        padding: .3em;
+    }
+
+    TH
+    {
+        background-color: rgb(255, 237, 237);
+
+        &:not([align])
+        {
+            text-align: left;
+        }
+    }
+
+    TD
+    {
+        background-color: rgb(246, 246, 246);
+    }
+    
+}
+```
+
+CSSへ変換後、適当な場所にアップロードします。
+
+    https://denki-kurage.github.io/md-table-editor-with-block-editor/sample.css
+
+
+![](md-css-set.png)
+
+ADMIN CSS はブロックエディタの確認画面に適用されるスタイルで、
+FRONT CSS は一般公開されたページに適用されるスタイルです。
+
+
+![](md-css.png)
+
+ブラウザを更新するとスタイルが適用されていることが確認できます。
+
+## ブログカードを追加したい
+
+![](md-blog-card.png)
+
+ツールバーからブログカードを追加できます。
+ただし、そのサイトがOGP(Open Graph Protocol)に対応している必要があります。
+現在のところ、対応していない場合は良しなに扱ってくれません。
+
+
+![](md-blog-card-2.png)
+
+ブログカードのタグが追加されます。
+
 
 
 ## ご要望等。

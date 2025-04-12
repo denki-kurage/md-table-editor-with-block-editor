@@ -15,6 +15,8 @@ import EditToolbar from './components/edit-toolbar';
 import { AppMainHelper } from './classes/AppMainHelper';
 import { useSelect } from '@wordpress/data';
 import { store as editorStore } from '@wordpress/editor';
+import { parseMarkdown } from './parser';
+import AppToolbars from './components/app-toolbars';
 
 const str = `
 | fruits | price | color  | pr |
@@ -70,11 +72,8 @@ export default ({ attributes, setAttributes }) =>
 				</PanelBody>
 			</InspectorControls>
 
-			<BlockControls>
-				<ToolbarGroup>
-					<ToolbarButton icon="media-default" label={ __('Add Image', 'md-table-editor')} onClick={() => setIsOpen(true)} />
-				</ToolbarGroup>
-			</BlockControls>
+
+			{ helper && <AppToolbars helper={helper} /> }
                     
 
 			<SplitPanel height={editHeight}>
@@ -110,10 +109,6 @@ export default ({ attributes, setAttributes }) =>
 					/>
 			}
 			
-
-			{ isOpen && <Modal title={ __('Add Image', 'md-table-editor')} onRequestClose={() => setIsOpen(false)}>
-				<ImageUploadEditor helper={helper} onExecuted={() => setIsOpen(false)} />
-			</Modal> }
 
 		</div>
 
@@ -217,10 +212,8 @@ const MarkdownViewer = ({value}) =>
 		updater.updated.push(() =>
 		{
 			const value = valueRef.current;
-			const parsedCode = marked.parse(value, { breaks: true });
-			const css = '<style>table{ width: 100%; }</style>';
-			const markdownContent = `<div class="markdown-content-style">${parsedCode}</div>`;
-			const html = `${css} ${markdownContent}`;
+			const parsedCode = parseMarkdown(value);
+			const html = `<div class="markdown-content-style">${parsedCode}</div>`;
 
 			const iframe = frameRef.current;
 
@@ -229,10 +222,24 @@ const MarkdownViewer = ({value}) =>
 			if(doc)
 			{
 				doc.body.innerHTML = html;
-				const fragment = doc.createDocumentFragment();
-				const styles = [...window.document.querySelectorAll('[is-markdown-content-style="true"]')];
-				styles.map(s => fragment.appendChild(s.cloneNode(true)));
-				doc.head.appendChild(fragment);
+
+				if(!doc.head.hasChildNodes())
+				{
+					const scripts = [
+					//'<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />',
+					//'<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />',
+					//'<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>',
+					//'<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>'
+					].join("\n");
+					
+					const fragment = doc.createDocumentFragment();
+					const styles = [...window.document.querySelectorAll('[is-markdown-content-style="true"]')];
+					styles.map(s => fragment.appendChild(s.cloneNode(true)));
+
+					doc.head.innerHTML = scripts;
+					doc.head.appendChild(fragment);					
+				}
+
 			}
 
 			setIsLoading(false);

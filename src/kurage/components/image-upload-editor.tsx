@@ -26,9 +26,6 @@ const ImageUploadEditor = ({ helper, onExecuted }) =>
     const width = de?.width;
     const height = de?.height;
 
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>")
-    console.log(img);
-
     const prv = (
         <div style={{maxWidth: '50vh', maxHeight: '50vh', overflow: 'scroll' }}>
             <ImagePreview url={url} thu={thu} />
