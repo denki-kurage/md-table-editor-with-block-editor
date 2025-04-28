@@ -86,6 +86,4 @@ const flatMaps = [...Object.entries(maps)]
  export const lightIconsMap = new Map(flatMaps.map((flat, idx) => [`${flat[0]}:${flat[1]}`, lightIcons[idx]]))
  export const darkIconsMap = new Map(flatMaps.map((flat, idx) => [`${flat[0]}:${flat[1]}`, darkIcons[idx]]))
 
- console.log(darkIconsMap)
-
 export default maps;

@@ -45,7 +45,7 @@ export class TableObserver implements ITextEventReciever
 	private tableUpdate(): void
 	{
 		const tables = new AppHelper(this.appContext).getTableContents();
-		console.log(tables)
+		//console.log(tables)
 		this.updated(tables);
 	}
 

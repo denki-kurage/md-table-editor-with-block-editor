@@ -23,7 +23,6 @@ marked.use({
         link: (p) =>
         {
             const { href, text, title } = p;
-            console.log(p);
             return `<a href="${href}" target="_blank">${text}</a>`;
         },
     }

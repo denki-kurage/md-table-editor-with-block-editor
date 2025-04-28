@@ -34,7 +34,6 @@ const ImageUploadEditor = ({ helper, onExecuted }) =>
 
     const addImage = () =>
     {
-        console.log(img)
         helper?.execCommand('markdown:add-image', {imageUrl: url, thumbnailUrl: thu, width, height });
         onExecuted();
     }

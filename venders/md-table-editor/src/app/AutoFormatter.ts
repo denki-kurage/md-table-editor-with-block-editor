@@ -44,7 +44,7 @@ export class AutoFormatter implements ITextEventReciever
 
 	public selectChanged(e: ISelectChanged): void
 	{
-		console.log(this.appContext.getCursor())
+		// console.log(this.appContext.getCursor())
 		// this.updateManager.hasUpdate();
 	}
 

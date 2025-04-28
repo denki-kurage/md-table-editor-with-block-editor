@@ -35,23 +35,16 @@ export class MonacoAppMain extends AppMain<MonacoInitParam>
         this.decorator = new MonacoDecorator(this.appContext, editor);
         this.switcher.decoratorSwitcher.changeEnable(true);
 
-        const langs = languages.getLanguages();
-        console.log(langs)
-
         monaco.languages.registerCompletionItemProvider(
             'markdown',
             {
                 triggerCharacters: ['x'],
                 provideCompletionItems: (model, pos, content, token) =>
                 {
-                    console.log(pos);
                     if(pos.column === 3)
                     {
                         const txt = model.getLineContent(pos.lineNumber).substring(0, 2);
                         const nbr = Number(txt.charAt(0));
-
-                        console.log(txt);
-                        console.log(nbr)
     
                         if(!isNaN(nbr) && txt.charAt(1) === 'x')
                         {
