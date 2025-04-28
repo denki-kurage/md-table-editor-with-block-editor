@@ -28,7 +28,7 @@ class OgpGenerator
 
     public async loadOgpItem(url: string): Promise<OgpItem>
     {
-        const res = await fetch(url);
+        const res = await fetch(url, { mode: 'no-cors' });
 
         if(res.ok)
         {
@@ -48,8 +48,10 @@ class OgpGenerator
                 url: map.get('og:url') ?? ''
             };
         }
-
-        throw new Error('');
+        else
+        {
+            throw new Error('responsed error');
+        }
     }
 }
 

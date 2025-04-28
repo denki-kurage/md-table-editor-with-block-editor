@@ -4,6 +4,7 @@ import React, { useEffect, useMemo } from "react";
 import { useState } from "react";
 import root from 'react-shadow';
 
+// @ts-ignore
 import css2 from './table.dscss';
 
 

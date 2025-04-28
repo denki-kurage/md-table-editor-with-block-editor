@@ -2,12 +2,10 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { __ } from '@wordpress/i18n';
 import {BlockControls, InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import './editor.scss';
-import { Button, Icon, Modal, PanelBody, Spinner, ToolbarButton, ToolbarGroup } from '@wordpress/components';
+import { Button, PanelBody, Spinner } from '@wordpress/components';
 
-import {  AppHelper, DefaultCommandItems, EventUpdateManager, IAppContext, MarkdownTableContent } from 'md-table-editor'
+import {  DefaultCommandItems, EventUpdateManager, MarkdownTableContent } from 'md-table-editor'
 import { BrowserAppMain } from './classes/BrowserAppMain';
-import { marked } from 'marked';
-import ImageUploadEditor from './components/image-upload-editor';
 import MonacoEditor from './components/monaco-editor';
 import { MonacoAppMain } from './classes/MonacoAppMain';
 import CommandsInspector from './components/commands-inspector';
@@ -31,7 +29,6 @@ type EditMode = "code"|"view"|"both";
 export default ({ attributes, setAttributes }) =>
 {
 	const { markdown, viewMode, splitSize, editHeight } = attributes;
-	const [isOpen, setIsOpen] = useState(false);
 
 	const [app, setApp] = useState<MonacoAppMain>();
 	const [tables, setTables] = useState<MarkdownTableContent[]>([]);
@@ -160,7 +157,7 @@ const TableEditor = ({ onValueChanged }) =>
 				/>
 			
 			{ (app && map && commands) && <EditToolbar map={map} commandMap={commands} isEnable={isEnableCommand} /> }
-			{ (app && map && commands) && <CommandsInspector map={map} commandMap={commands} tables={tables} isEnable={isEnableCommand}  /> }
+			{/* (app && map && commands) && <CommandsInspector map={map} commandMap={commands} tables={tables} isEnable={isEnableCommand}  /> */}
 
 
 		</>
