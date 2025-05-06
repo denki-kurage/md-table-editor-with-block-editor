@@ -27,6 +27,13 @@ https://marketplace.visualstudio.com/items?itemName=clover.md-table-editor
 https://github.com/denki-kurage/md-table-editor-with-block-editor/blob/main/src/kurage/document/readme.jp.md
 
 
+
+開発者向け。
+
+https://github.com/denki-kurage/md-table-editor-with-block-editor
+
+
+
 == Installation ==
 
 1. 管理画面に移動

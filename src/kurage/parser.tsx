@@ -1,4 +1,4 @@
-import { marked, Tokens } from "marked"
+import { marked } from "marked"
 import { sanitize } from "./classes/sanitizer";
 
 marked.use({
@@ -6,13 +6,14 @@ marked.use({
         code: (p) =>
         {
             const { lang, text, escaped } = p;
-            const lg = lang ?? '';
-            if(lg.includes(':'))
+            if(lang)
             {
-                const [lang, file] = lg.split(':');
+                const [lg, file] = lang.split(':');
+                
                 const code = escaped ? text : sanitize(text);
-                const l = sanitize(lang ?? '');
+                const l = sanitize(lg ?? '');
                 const f = sanitize(file ?? '');
+
                 const label = f ? ` data-label="${f}"` : '';
                 return `<pre${label}><code class="language-${l}">${code}</code></pre>`
             }

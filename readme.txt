@@ -6,7 +6,7 @@ Stable tag: 0.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 6.7.2
-Requires PHP: 8.0.30-dev
+Requires PHP: 8.0.30
 
 
 Markdown Table edit tool.
@@ -28,6 +28,11 @@ https://marketplace.visualstudio.com/items?itemName=clover.md-table-editor
 Please see here for specific operations.
 
 https://github.com/denki-kurage/md-table-editor-with-block-editor/blob/main/src/kurage/document/readme.md
+
+
+for developers.
+
+https://github.com/denki-kurage/md-table-editor-with-block-editor
 
 
 

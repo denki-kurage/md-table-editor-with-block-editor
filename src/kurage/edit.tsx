@@ -16,6 +16,9 @@ import { store as editorStore } from '@wordpress/editor';
 import { parseMarkdown } from './parser';
 import AppToolbars from './components/app-toolbars';
 
+
+//import Prism from 'prismjs'
+
 const str = `
 | fruits | price | color  | pr |
 |--------|-------|--------|----|
@@ -208,17 +211,21 @@ const MarkdownViewer = ({value}) =>
 		const updater = new EventUpdateManager(800);
 		updater.updated.push(() =>
 		{
+
 			const value = valueRef.current;
 			const parsedCode = parseMarkdown(value);
 			const html = `<div class="markdown-content-style">${parsedCode}</div>`;
 
 			const iframe = frameRef.current;
-
 			// @ts-ignore
 			const doc = (iframe?.contentDocument ?? iframe?.contentWindow.document);
+
 			if(doc)
 			{
 				doc.body.innerHTML = html;
+
+				// @ts-ignore
+				window.Prism.highlightAllUnder(doc);
 
 				if(!doc.head.hasChildNodes())
 				{
@@ -229,9 +236,16 @@ const MarkdownViewer = ({value}) =>
 					//'<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>'
 					].join("\n");
 					
+					const createLink = (link: string) =>
+					{
+						const elm = document.createElement("link");
+						Object.entries({ rel: 'stylesheet', type: "text/css", href: link }).map(p => elm.setAttribute(...p))
+						return elm;
+					}
 					const fragment = doc.createDocumentFragment();
-					const styles = [...window.document.querySelectorAll('[is-markdown-content-style="true"]')];
-					styles.map(s => fragment.appendChild(s.cloneNode(true)));
+					const metas = [...window.document.querySelectorAll('meta[property="is-markdown-content-style"], meta[content^=http]')];
+					// @ts-ignore
+					metas.map(meta => fragment.appendChild(createLink(meta.content)));
 
 					doc.head.innerHTML = scripts;
 					doc.head.appendChild(fragment);					

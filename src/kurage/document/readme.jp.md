@@ -13,11 +13,6 @@ https://marketplace.visualstudio.com/items?itemName=clover.md-table-editor
 このブロックを使用すると、マークダウン形式のテーブルで表を作成、編集できます。
 列や行の追加、削除、移動、テキストの整列、成形などマークダウンテーブルの編集を一通りできます。
 
-現在のところソースコードのハイライトが実装出来ておらず、
-もうしばらく時間がかかります。今はあくまでテーブル編集専用として使います。
-
-
-
 
 ## 使い方
 
@@ -218,6 +213,21 @@ FRONT CSS は一般公開されたページに適用されるスタイルです�
 
 ブラウザを更新するとスタイルが適用されていることが確認できます。
 
+
+### コードから確認画面にスタイルを指定
+
+```php
+add_action(
+    'admin_head',
+    fn() => printf('<meta property="is-markdown-content-style" content="%s" />', plugin_dir_url(__FILE__) . 'test.css')
+);
+```
+
+メタ情報に、porpertyをis-markdown-content-styleを、contentにCSSを指定すると、そのスタイルを確認画面に適用します。
+
+
+
+
 ## ブログカードを追加したい
 
 ![](md-blog-card.png)
@@ -230,6 +240,13 @@ FRONT CSS は一般公開されたページに適用されるスタイルです�
 ![](md-blog-card-2.png)
 
 ブログカードのタグが追加されます。
+
+
+## ソースコードのハイライト
+
+Prism.jsが使用されてます。
+
+![](md-code.png)
 
 
 

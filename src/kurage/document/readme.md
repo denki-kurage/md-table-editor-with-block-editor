@@ -16,9 +16,6 @@ This block allows you to create and edit tables in Markdown format.
 It allows you to do all the editing of Markdown tables, such as adding, deleting, and moving columns and rows, and aligning and shaping text.
 
 
-Currently, source code highlighting has not been implemented,
-and it will take some time. For now, it is only used for table editing.
-
 
 ## How to use
 
@@ -210,6 +207,19 @@ Refresh your browser to see that the style has been applied.
 
 
 
+### Specify style for confirmation screen from code
+
+```php
+add_action(
+'admin_head',
+fn() => printf('<meta property="is-markdown-content-style" content="%s" />', plugin_dir_url(__FILE__) . 'test.css')
+);
+```
+
+If you specify is-markdown-content-style for property and CSS for content in meta information, that style will be applied to the confirmation screen.
+
+
+
 
 ## I want to add a blog card
 
@@ -225,6 +235,11 @@ The blog card tag will be added.
 
 
 
+## Source code highlighting
+
+Prism.js is used.
+
+![](md-code.png)
 
 
 ## Requests, etc.

@@ -45,26 +45,34 @@ add_action('init', function(){
 	$adminCss = $adminCss ? $adminCss : $cssPath;
 	$frontCss = $frontCss ? $frontCss : $cssPath;
 
-	add_action('wp_head', function(){
+	$styles = [
+		['md-table-editor-prism-tommorow', 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css'],
+	];
 
-		
-		//echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />';
-		echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />';
-		echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>';
-		echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>';
-	});
-	add_action('admin_head', function(){
+	$scripts = [
+		['md-table-editor-prism-core', 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js'],
+		['md-table-editor-prism-autoloader', 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js']
+	];
 
-		
-		//echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />';
-		echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />';
-		echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>';
-		echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>';
-	});
+	$enqueue = function($styles, $scripts)
+	{
+		foreach($styles as $style) wp_enqueue_style(...$style);
+		foreach($scripts as $script) wp_enqueue_script(...$script);
+	};
 
+	$renderInlineCss = function($url)
+	{
+		// インラインフレーム内で使用するものなので
+		printf('<meta property="is-markdown-content-style" content="%s" />', esc_attr($url));
+	};
+	
+	add_action('wp_enqueue_scripts', fn() => $enqueue($styles, $scripts));
+	add_action('wp_enqueue_scripts', fn() => wp_enqueue_style('md-table-editor-front-css', $frontCss));
 
-	add_action('wp_head', fn() => printf('<link rel="stylesheet" href="%s" />', esc_attr($frontCss)));
-	add_action('admin_head', fn() => printf('<link rel="stylesheet" is-markdown-content-style="true" href="%s" />', esc_attr($adminCss)));
+	add_action('admin_enqueue_scripts', fn() => $enqueue($styles, $scripts));
+	add_action('admin_head', fn() => $renderInlineCss($adminCss));
+	add_action('admin_head', fn() => $renderInlineCss('https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css'));
+
 });
 
 add_action('rest_api_init', function(){
@@ -120,8 +128,8 @@ add_action('rest_api_init', function(){
 				{
 					$admin = $request->get_param('admin');
 					$front = $request->get_param('front');
-					$pa = parse_url($admin, PHP_URL_SCHEME);
-					$fa = parse_url($front, PHP_URL_SCHEME);
+					$pa = wp_parse_url($admin, PHP_URL_SCHEME);
+					$fa = wp_parse_url($front, PHP_URL_SCHEME);
 
 					$height = (int)$request->get_param('editorHeight');
 
