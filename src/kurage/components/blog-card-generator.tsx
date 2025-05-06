@@ -63,7 +63,7 @@ const BlogCardGenerator = ({ helper, onExecuted }) =>
             <TextControl value={url} onChange={updateState} style={style} help={error}  />
 
             <Button variant="primary" disabled={loading} onClick={() => addBlogCard()}>
-                { __('Add blog card', 'md-table-editor') }
+                { __('Add blog card', 'md-table-editor-with-block-editor') }
             </Button>
         </>
     )

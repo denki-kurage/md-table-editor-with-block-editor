@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { AppMain, IAppContext, IDocumentPosition, IStringCounter, ITextSource, MarkdownRange, MarkdownTableContent, MultiEventRecievers, ITextReplacer, ITextEventReciever} from 'md-table-editor'
+import { AppMain, IAppContext, IDocumentPosition, IStringCounter, ITextSource, MarkdownTableContent, ITextReplacer, ITextEventReciever} from 'md-table-editor'
 import { BrowserAppHelper } from './BrowserAppHelper';
 import { IEditorDecorator } from 'md-table-editor/dist/interfaces/IAppContext';
 
@@ -21,10 +21,15 @@ export class BrowserAppMain extends AppMain<any> implements IAppContext
     {
         super(null);
     }
+
+
+        //throw new Error('Method not implemented.');
+    //}
     
 
+    //protected createTextReplacer(): ITextReplacer
 
-    protected createTextReplacer(): ITextReplacer
+    public getTextReplacer(): ITextReplacer
     {
         const replace = (range, replaceText) => {
             const { begin, end } = range;

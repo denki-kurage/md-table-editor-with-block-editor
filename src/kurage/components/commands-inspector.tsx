@@ -63,7 +63,7 @@ export const CommandsInspector = ({ map, commandMap, tables, current, isEnable, 
             <PanelBody title="attributes">
                 <div>
                     <RangeControl
-                        label={ __(`Editor Height`, 'md-table-editor') + (editHeight ? `(${editHeight})` : '') }
+                        label={ __(`Editor Height`, 'md-table-editor-with-block-editor') + (editHeight ? `(${editHeight})` : '') }
                         min={100}
                         max={2000}
                         withInputField={false}
@@ -79,10 +79,10 @@ export const CommandsInspector = ({ map, commandMap, tables, current, isEnable, 
 
                 <div>
                     <Button variant="primary" disabled={isSettingsOpen} onClick={() => setIsSettingsOpen(true)}>
-                        { __('Open settings from', 'md-table-editor') }
+                        { __('Open settings from', 'md-table-editor-with-block-editor') }
                     </Button>
                     { isSettingsOpen && (
-                        <Modal title={ __('global settings', 'md-table-editor') } onRequestClose={e => setIsSettingsOpen(false)}>
+                        <Modal title={ __('global settings', 'md-table-editor-with-block-editor') } onRequestClose={e => setIsSettingsOpen(false)}>
                             <OptionSettings onCompleted={e => setIsSettingsOpen(false)} />
                         </Modal>
                     )}
