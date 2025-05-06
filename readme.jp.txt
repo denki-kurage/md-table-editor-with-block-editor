@@ -1,12 +1,13 @@
 === MdTableEditor with Block Editor ===
 Contributors: denkikurage
 Tags: markdown table
-Tested up to: 6.7.2
+Tested up to: 6.8
 Stable tag: 0.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 6.7.2
 Requires PHP: 8.0.30
+
 
 
 Markdown Table edit tool.
