@@ -1,6 +1,6 @@
 
 import { useBlockProps } from '@wordpress/block-editor';
-import { parseMarkdown } from './parser';
+import { parseMarkdown } from './components/parser';
 
 export const save = ({attributes}) =>
 {

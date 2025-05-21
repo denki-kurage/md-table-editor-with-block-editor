@@ -1,5 +1,5 @@
 import { Monaco } from "@monaco-editor/react";
-import { editor, IRange, languages, Position } from 'monaco-editor';
+import { editor, IDisposable, IRange, languages, Position } from 'monaco-editor';
 import { AppMain, IAppContext, ICommand, ITextEventReciever, ITextReplacer, MarkdownTableContent, TableCacheManager } from "md-table-editor";
 import { MonacoDecorator } from "./MonacoDecorator";
 import { AddImageCommand } from "../commands/AddImageCommand";
@@ -256,6 +256,40 @@ export class MonacoAppMain extends AppMain<MonacoInitParam>
             const { startColumn, startLineNumber } = e.selection;
             reciever.selectChanged({ startPosition: { docIndex: startLineNumber, charIndex: startColumn } });
         })
+    }
+
+
+    
+    //#region
+    private monacoDisposables: IDisposable[] = [];
+
+    public scroll(lineNumber: number)
+    {
+        const ln = this.editor.getVisibleRanges()?.[0].startLineNumber;
+        if(lineNumber !== ln)
+        {
+            const pos = this.editor.getTopForPosition(lineNumber + 1, 1);
+            this.editor.setScrollTop(pos, editor.ScrollType.Immediate);
+        }
+    }
+
+    public addScrollEventListener(scrolled: (lineNumber: number) => void)
+    {
+        this.monacoDisposables.push(this.editor.onDidScrollChange(e => {
+            const ln = this.editor.getVisibleRanges()?.[0].startLineNumber;
+            if(ln)
+            {   
+                scrolled(ln - 1)
+            }
+        }))
+    }
+    //#endregion
+
+
+
+    public override dispose(): void
+    {
+        this.monacoDisposables.forEach(d => d.clear());
     }
 }
 

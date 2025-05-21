@@ -6,19 +6,23 @@ import root from 'react-shadow';
 
 // @ts-ignore
 import css2 from './table.dscss';
+import { useLineNumberContext } from "../line-number-context";
 
 
 export const MonacoEditor = ({ value, onAppChanged, onValueChanged, onTablesChanged, onCurrentTableChanged }) =>
 {
     const [app, setApp] = useState<MonacoAppMain>();
+    const { lineNumber, updateLineNumber } = useLineNumberContext();
 
     useEffect(() => {
         if(app)
         {
             onAppChanged(app);
-            return () => app?.dispose()            
+            return () => app?.dispose()
         }
     }, [app]);
+
+
 
     return (
         <>
@@ -26,7 +30,7 @@ export const MonacoEditor = ({ value, onAppChanged, onValueChanged, onTablesChan
             <root.div className="monaco-shadow-dom">
 
                 <style>{css2}</style>
-                
+
                 <link
                     rel="stylesheet"
                     type="text/css"
