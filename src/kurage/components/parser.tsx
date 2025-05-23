@@ -166,14 +166,29 @@ const getLineMap = (document) =>
 export const registerMarkdownViewer = (document, lineChanged: (lineNumber: number) => void) =>
 {
     document.addEventListener('scroll', e => {
-
+        const top = document.body.scrollTop;
         const lineMap = getLineMap(document);
         const [nbr] = [...lineMap.values()].reduce(([newNbr, newDif], [nbr, dif, pos]) => {
             return dif < newDif ? [nbr, dif] : [newNbr, newDif];
         }, [0, Number.MAX_SAFE_INTEGER])
+        const nxt = [...lineMap.keys()].filter(k => k > nbr).reduce((pre, cur) => Math.min(pre, cur), Number.MAX_SAFE_INTEGER);
+        
+        const nearLineNumber = lineMap.get(nbr);
+        const nextLineNumber = lineMap.get(nxt);
 
-        const nearLineNumber = lineMap.get(nbr)?.[0] ?? 0;
-        lineChanged(nearLineNumber)
+        if(nearLineNumber && nextLineNumber)
+        {
+            const [nearNbr, , nearPos] = nearLineNumber;
+            const [nextNbr, , nextPos] = nextLineNumber;
+            const diff = (top - nearPos) / (nextPos - nearPos);
+            const lin = Math.floor((nextNbr - nearNbr) * diff) + nearNbr;
+            lineChanged(lin);
+        }
+        else
+        {
+            lineChanged(nearLineNumber?.[0] ?? 0)
+            console.log(nearLineNumber?.[0])
+        }
     });
 }
 
@@ -187,9 +202,9 @@ export const getPositionFromLineNumber = (win, lineNumber: number) =>
     const minPos = lineMap.get(minNumner)?.[2] ?? 0;
     const maxPos = lineMap.get(maxNumber)?.[2] ?? 0;
 
-
-    const b = maxNumber - minNumner + 1;
-    return minPos + ((maxPos - minPos) / b);
+    const b = (lineNumber - minNumner + 1)  / (maxNumber - minNumner + 1) 
+    const diff = (maxPos - minPos) * b + minPos;
+    return diff;
 }
 
 export const scrollToLineNumber = (win: Window, lineNumber) =>
