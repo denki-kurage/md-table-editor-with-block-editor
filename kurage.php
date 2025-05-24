@@ -1,3 +1,3 @@
 <?php
 
-require('md-table-editor-with-block-editor.php');
+require('mdtableeditor.php');

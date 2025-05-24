@@ -15,16 +15,16 @@ const AppToolbars = ({helper}: { helper: AppMainHelper }) =>
         <>
             <BlockControls>
                 <ToolbarGroup>
-                    <ToolbarButton icon="media-default" label={__('Add Image', 'md-table-editor-with-block-editor')} onClick={() => setImageOpen(true)} />
-                    <ToolbarButton icon="archive" label={__('Add Blog Card', 'md-table-editor-with-block-editor')} onClick={() => setLinkOpen(true)} />
+                    <ToolbarButton icon="media-default" label={__('Add Image', 'mdtableeditor')} onClick={() => setImageOpen(true)} />
+                    <ToolbarButton icon="archive" label={__('Add Blog Card', 'mdtableeditor')} onClick={() => setLinkOpen(true)} />
                 </ToolbarGroup>
             </BlockControls>
 
-            <ToolbarButtonModal title={__('Add Image', 'md-table-editor-with-block-editor')} isOpen={imageOpen} openChanged={setImageOpen}>
+            <ToolbarButtonModal title={__('Add Image', 'mdtableeditor')} isOpen={imageOpen} openChanged={setImageOpen}>
                 <ImageUploadEditor helper={helper} onExecuted={setImageOpen} />
             </ToolbarButtonModal>
 
-            <ToolbarButtonModal title={__('Add Blog Card', 'md-table-editor-with-block-editor')} isOpen={linkOpen} openChanged={setLinkOpen}>
+            <ToolbarButtonModal title={__('Add Blog Card', 'mdtableeditor')} isOpen={linkOpen} openChanged={setLinkOpen}>
                 <BlogCardGenerator helper={helper} onExecuted={setLinkOpen} />
             </ToolbarButtonModal>
         </>

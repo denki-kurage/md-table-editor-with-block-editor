@@ -89,7 +89,7 @@ export const SettingsForm = ({ settings, onCompleted }) =>
                     }
                 })
 
-                createSuccessNotice(__('updated', 'md-table-editor-with-block-editor'), { type: 'snackbar'})
+                createSuccessNotice(__('updated', 'mdtableeditor'), { type: 'snackbar'})
                 onCompleted(true)
             }
             catch(e)
@@ -123,9 +123,9 @@ export const SettingsForm = ({ settings, onCompleted }) =>
             <TextControl value={front} onChange={setFront} label="front css" />
             <TextControl value={admin} onChange={setAdmin} label="admin css" />
 
-            <Button disabled={isLoading} variant="primary" style={{width: '100%'}} onClick={() => updateOptions()}>{ __('Update', 'md-table-editor-with-block-editor')}</Button>
+            <Button disabled={isLoading} variant="primary" style={{width: '100%'}} onClick={() => updateOptions()}>{ __('Update', 'mdtableeditor')}</Button>
 
-            <p>{ __('This will update the options used globally, but you will need to reload the page for the changes to take effect.', 'md-table-editor-with-block-editor') }</p>
+            <p>{ __('This will update the options used globally, but you will need to reload the page for the changes to take effect.', 'mdtableeditor') }</p>
         </div>
     )
 }

@@ -31,7 +31,7 @@
 			"default": null
 		}
 	},
-	"textdomain": "md-table-editor-with-block-editor",
+	"textdomain": "mdtableeditor",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

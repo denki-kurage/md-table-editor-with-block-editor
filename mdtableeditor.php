@@ -3,12 +3,12 @@
  * Plugin Name:       MdTableEditor with Block Editor
  * Description:       This is an editor that allows you to edit tables in Markdown notation.
  * Version:           0.1.0
- * Requires at least: 6.7.2
+ * Requires at least: 6.8
  * Requires PHP:      8.0.30
  * Author:            denkikurage
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       md-table-editor-with-block-editor
+ * Text Domain:       mdtableeditor
  *
  * @package CreateBlock
  */
@@ -17,23 +17,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-/**
- * Registers the block using the metadata loaded from the `block.json` file.
- * Behind the scenes, it registers also all assets so they can be enqueued
- * through the block editor in the corresponding context.
- *
- * @see https://developer.wordpress.org/reference/functions/register_block_type/
- */
-function create_block_kurage_block_init() {
-	register_block_type( __DIR__ . '/build/kurage' );
-}
-add_action( 'init', 'create_block_kurage_block_init' );
+
+add_action( 'init', fn() => register_block_type( __DIR__ . '/build/kurage' ) );
 
 add_action( 'after_setup_theme', function(){
 	add_theme_support('align-wide');
 });
-
-
 
 
 add_action('init', function(){
@@ -45,13 +34,16 @@ add_action('init', function(){
 	$adminCss = $adminCss ? $adminCss : $cssPath;
 	$frontCss = $frontCss ? $frontCss : $cssPath;
 
+	$themes = ['coy', 'dark', 'default', 'funkey', 'okaidia', 'solarized', 'tommorow', 'twilight'];
+	$rand = wp_rand(0, count($themes) - 1);
+	$theme = 'tommorow';
+
 	$styles = [
-		['md-table-editor-prism-tommorow', 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css'],
+		['md-table-editor-prism-tommorow', $pluginPath . "prismjs/{$theme}/prism.css"],
 	];
 
 	$scripts = [
-		['md-table-editor-prism-core', 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js'],
-		['md-table-editor-prism-autoloader', 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js']
+		['md-table-editor-prism-core', $pluginPath . "prismjs/{$theme}/prism.js"],
 	];
 
 	$enqueue = function($styles, $scripts)
@@ -71,7 +63,7 @@ add_action('init', function(){
 
 	add_action('admin_enqueue_scripts', fn() => $enqueue($styles, $scripts));
 	add_action('admin_head', fn() => $renderInlineCss($adminCss));
-	add_action('admin_head', fn() => $renderInlineCss('https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css'));
+	add_action('admin_head', fn() => $renderInlineCss($pluginPath . "prismjs/{$theme}/prism.css"));
 
 });
 
@@ -103,7 +95,8 @@ add_action('rest_api_init', function(){
 						'front' => $front,
 						'editorHeight' => $height
 					]);
-				}
+				},
+				'permission_callback' => fn() => current_user_can('manage_options'),
 			],
 			[
 				'methods' => WP_REST_Server::CREATABLE,

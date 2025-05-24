@@ -71,9 +71,9 @@ export default ({ attributes, setAttributes }) =>
 				<InspectorControls>
 					<PanelBody title="操作パネル">
 						<div className="button-group" >
-							<Button variant="primary" disabled={viewMode === "code"} onClick={() => onPanelChange("code")}>{ __('Code', 'md-table-editor-with-block-editor') }</Button>
-							<Button variant="primary" disabled={viewMode === "view"} onClick={() => onPanelChange("view")}>{ __('View', 'md-table-editor-with-block-editor') }</Button>
-							<Button variant="primary" disabled={viewMode === "both"} onClick={() => onPanelChange("both")}>{ __('Both', 'md-table-editor-with-block-editor') }</Button>
+							<Button variant="primary" disabled={viewMode === "code"} onClick={() => onPanelChange("code")}>{ __('Code', 'mdtableeditor') }</Button>
+							<Button variant="primary" disabled={viewMode === "view"} onClick={() => onPanelChange("view")}>{ __('View', 'mdtableeditor') }</Button>
+							<Button variant="primary" disabled={viewMode === "both"} onClick={() => onPanelChange("both")}>{ __('Both', 'mdtableeditor') }</Button>
 						</div>
 					</PanelBody>
 				</InspectorControls>
