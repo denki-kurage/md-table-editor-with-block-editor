@@ -50,13 +50,13 @@ const properites: Array<rendererType> = [
     "code",
     "heading",
     "hr",
-    "list",
+   // "list",
     "listitem",
     "paragraph",
     "space",
-    "table",
-    "tablecell",
-    "tablerow",
+    //"table",
+    //"tablecell",
+    ///"tablerow",
     "html",
     "link",
     "image",
@@ -69,7 +69,7 @@ const properites: Array<rendererType> = [
 ]
 
 
-const createRendererOptions = (renderer, dom: string[]) =>
+const createRendererOptions = (renderer) =>
 {
     return properites.reduce((obj, property) => {
         obj[property] = (p) =>
@@ -85,24 +85,23 @@ const createRendererOptions = (renderer, dom: string[]) =>
             if(element?.setAttribute)
             {
                 element?.setAttribute("data-line-number", lineNumber);
-                dom.push(div.innerHTML);
             }
             
-            return false;
+            return div.innerHTML;
         }
 
         return obj;
     }, {})
 }
 
-const createMarked = (dom: string[] = []) =>
+const createMarked = () =>
 {
     const renderer = new Renderer();
     const parser = new Parser({ renderer });
 
     const md = new Marked();
     renderer.parser = parser;
-    const rendererOptions = createRendererOptions(renderer, dom);
+    const rendererOptions = createRendererOptions(renderer);
 
     md.use({
         renderer: rendererOptions
@@ -137,28 +136,43 @@ const recTokens = (offset, tokens) =>
 
 export const mdparse = (txt: string) =>
 {
-    const dom: string[] = [];
-    const md = createMarked(dom);
+    const md = createMarked();
     const tokens = md.lexer(txt);
+
     recTokens(0, tokens);
 
     const html = md.parser(tokens)
-    console.log(html)
-    console.log(dom)
 
-    return dom.join("");
+    return html;
 }
 
 
+
+const getOffsetTop = (line: HTMLElement, document: Element) =>
+{
+    let current: HTMLElement | null = line;
+
+    do
+    {
+        const top = current.offsetTop;
+        if(top)
+        {
+            return top;
+        }
+    }
+    while((current = current.parentElement) && (current !== document))
+
+    return 0;
+}
 
 const getLineMap = (document) =>
 {
     const lines = document.querySelectorAll('[data-line-number]') as any;
     return new Map([...lines.values()].map(line => {
         const top = document.body.scrollTop; //viewer.offsetTop + viewer.scrollTop;
-        const pos = line.offsetTop;
+        const pos = getOffsetTop(line, document);
         const dif = pos - top;
-        const n = parseInt(line.getAttribute('data-line-number') || 0);
+        const n = parseInt(line.getAttribute('data-line-number') ?? 0);
         return [n, [n, Math.abs(dif), pos]]
     })) as Map<number, [number, number, number]>;
 }
@@ -187,7 +201,6 @@ export const registerMarkdownViewer = (document, lineChanged: (lineNumber: numbe
         else
         {
             lineChanged(nearLineNumber?.[0] ?? 0)
-            console.log(nearLineNumber?.[0])
         }
     });
 }
