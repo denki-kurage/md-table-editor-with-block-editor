@@ -2,7 +2,7 @@
 Contributors: denkikurage
 Tags: markdown table
 Tested up to: 6.8
-Stable tag: 0.1.0
+Stable tag: 0.3.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 6.8
@@ -21,18 +21,18 @@ Please see here for specific operations.
 
 This is a port of the VSCode extension "MdTableEditor" to the block editor.
 
-https://marketplace.visualstudio.com/items?itemName=clover.md-table-editor
+[https://marketplace.visualstudio.com/items?itemName=clover.md-table-editor](https://marketplace.visualstudio.com/items?itemName=clover.md-table-editor)
 
 
 
 Please see here for specific operations.
 
-https://github.com/denki-kurage/md-table-editor-with-block-editor/blob/main/src/kurage/document/readme.md
+[https://github.com/denki-kurage/md-table-editor-with-block-editor/blob/main/src/kurage/document/readme.md](https://github.com/denki-kurage/md-table-editor-with-block-editor/blob/main/src/kurage/document/readme.md)
 
 
 for developers.
 
-https://github.com/denki-kurage/md-table-editor-with-block-editor
+[https://github.com/denki-kurage/md-table-editor-with-block-editor](https://github.com/denki-kurage/md-table-editor-with-block-editor)
 
 
 Venders
